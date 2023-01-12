@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Encriptar - desencriptar</title>
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="caja">
+            <img class="logo" src="imagenes/logo.png">
+            <textarea class="textEntrada" style="display:block;" placeholder="Ingrese el texto aqui" id="datoEntrada" onkeypress="return soloLetras(event)" rows="5" cols="50"></textarea>
+            <label for="buttonencrip">Solo letras minusculas y sin acentos</label><br>
+            <button class="button-encriptar" onclick="encriptar();" id="buttonencrip" type="button">Encriptar!</button>
+            <button class="button-desencriptar" onclick="desEncriptar();" id="buttondesencrip"  type="button"> Desencriptar!</button>
+            <div class="rectangulo">
+                <img class="muneco" src="imagenes/Muñeco.png">
+                <label class="ningun" for="resultado">Ningún mensaje fue encontrado</label><br>
+                <label class="ingresar" for="resultado">Ingresa el texto que desees encriptar o desencriptar</label><br>          
+            </div>
+            <div id="rectAreaBoton" class="rectangulo">
+                <textarea class="textsalida" style="display:block;" id="resultado" rows="5" cols="50"></textarea>
+                <button onclick="copiaAlportapapeles();" class="copiar" type="button">Copiar</button>
+            </div>
+            
+        </div>
+        
+        <script>
+            
+            var lista = [];
+            var lista2 = [];
+            var list = [];
+            var list2 = [];
+            var mostrar ="";
+            
+        
+            function limpiar() {
+                lista = [];
+                lista2 = [];
+                list = [];
+                list2 = [];
+                mostrar ="";
+                //document.getElementById("resultado").value = "";
+            }  
+    
+            function verificar(){
+                limpiar();
+                var entrada = document.getElementById("datoEntrada").value;
+                var lista = entrada.split(' ');
+                
+                for (var posicion = 0; posicion < lista.length; posicion++) {
+                    lista2.push(lista[posicion].split(''));
+                }
+                return lista2
+                //encriptar(lista2);
+            }
+        
+            function encriptar(){
+                document.getElementById("rectAreaBoton").style.visibility = 'visible';
+                
+                var frase = verificar();
+                var encriptada = "";
+                var listaEncriptada = [];
+                var listEncriptada = [];
+                for (var i = 0; i < frase.length; i++) {
+                    for (var j = 0; j < frase[i].length; j++) {
+                        if (frase[i][j] == "a"){
+                            encriptada += "ai";
+                        }
+        
+                        else if (frase[i][j] == "e"){
+                            encriptada += "enter";
+                        }
+        
+                        else if (frase[i][j] == "i"){
+                            encriptada += "imes";
+                        }
+        
+                        else if (frase[i][j] == "o"){
+                            encriptada += "ober";
+                        }
+        
+                        else if (frase[i][j] == "u"){
+                            encriptada += "ufat";
+                        }
+        
+                        else {
+                            encriptada += frase[i][j];
+                        }
+                    }
+        
+                    listaEncriptada.push([encriptada]);
+                    encriptada = "";
+                }
+                mostrar =  listaEncriptada.join(" ");
+                //imprimir(mostrar);
+                resultado.value = mostrar;
+                console.log(mostrar);
+                mostrar = " ";
+                list2 = [];
+        
+                
+            }
+        
+            function desEncriptar(){
+        
+                // PARA LA PRUEBA
+                var datoDesencrip = document.getElementById("resultado");
+                var frase = datoDesencrip.value.split(' ');
+                //var frase = input.value.split(' ');
+        
+        
+                for (var i = 0; i < frase.length; i++) {
+                    console.log(frase[i])
+                    //for (var j = 0; j < list[i].length; j++) {
+                    if (frase[i].includes("ai") == true){
+                        console.log("entra a")
+                        //frase[i] = frase[i].replace("ai", "a");
+                        frase[i] = frase[i].replace(/ai/gi,"a");
+                    }
+        
+                    if (frase[i].includes("enter") == true){
+                        frase[i] = frase[i].replace(/enter/gi,"e");
+                    }
+        
+                    if (frase[i].includes("imes") == true){
+                        frase[i] = frase[i].replace(/imes/gi,"i");
+                    }
+        
+                    if (frase[i].includes("ober") == true){
+                        frase[i] = frase[i].replace(/ober/gi,"o");
+        
+                    }
+        
+                    if (frase[i].includes("ufat") == true){
+                        frase[i] = frase[i].replace(/ufat/gi,"u");
+                    }
+        
+        
+                    list2.push([frase[i]]);
+                }
+                var mostrar =  list2.join(" ");
+                resultado.value = mostrar;
+                mostrar = "";
+                //console.log(mostrar)
+          
+            }
+            
+        
+            //var encrip = document.querySelector("buttonencrip");;
+            //encrip.onclick = verificar;
+            //button.onclick = desEncriptar;
+            function copiaAlportapapeles(){
+                let texto = document.getElementById("resultado");
+                texto.select();
+                texto.setSelectionRange(0,99999);
+                document.execCommand('copy');
+            }
+
+            function soloLetras(e){
+                key = e.keyCode || e.which;
+                teclado = String.fromCharCode(key);
+                var letras = " abcdefghijklmnñopqrstuvwxyz";
+                
+                function mostrarError() {
+                    swal("Solo permite ingresar letras minúsculas y sin acentos",{
+                        buttons: ["ok"]
+                    });
+                }
+
+                if(letras.indexOf(teclado)==-1){
+                    //mostrarError();
+                    //swal(' ','Solo permite ingresar letras minúsculas y sin acentos','error');
+                    return false;
+                    
+                }
+            }
+        </script> 
+        
+    </body>
+</html>
