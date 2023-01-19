@@ -6,44 +6,42 @@
         <title>Encriptar - desencriptar</title>
         <link rel="stylesheet" href="reset.css">
         <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap" rel="stylesheet">
     </head>
     <body>
         <header>
-            <img class="logo" src="imagenes/logo.png">
+            <img class="logo" src="imagenes/logo.png" alt="logo a">
         </header>
         <main>
-            <section class="caja1">
-                <div class="encriptador">
-                    <textarea class="textEntrada" style="display:block;" placeholder="Ingrese el texto aqui" id="datoEntrada" onkeypress="return soloLetras(event)" rows="5" cols="50"></textarea>
-                    <legend class="mensajeinf">
-                        <img class="admiracion" src="imagenes/admiracion.png">
-                        Solo letras minusculas y sin acentos
-                    </legend>
+            <section class="seccion_1">
+                <textarea class="textEntrada" placeholder="Ingrese el texto aqui" id="datoEntrada" onkeypress="return soloLetras(event)"></textarea>
+                <div class="mensajeinf">
+                    <img class="admiracion" src="imagenes/admiracion.png">
+                    Solo letras minusculas y sin acentos
                 </div>
-                <ul class="botones">
-                    <li>
-                        <button class="button-encriptar" onclick="encriptar();" id="buttonencrip" type="button">Encriptar!</button>
-                    </li>
-                    <li>
-                        <button class="button-desencriptar" onclick="desEncriptar();" id="buttondesencrip"  type="button"> Desencriptar!</button>
-                    </li>
-                </ul>
+                <div class="botones">
+                    <button class="button-encriptar" onclick="encriptar();" id="buttonencrip" type="button">Encriptar!</button>
+                    <button class="button-desencriptar" onclick="desEncriptar();" id="buttondesencrip"  type="button"> Desencriptar!</button>
+                </div>
+            </section> 
+            <section class="seccion_2">
+                <div class="boton-copiar" id="rectAreaBoton">
+                    <textarea readonly class="textsalida" id="resultado" rows="5" cols="50" style="display:block;"  ></textarea>
+                    <button id="botoncopiar" onclick="copiaAlportapapeles();" class="button-copiar" type="button">Copiar</button>
+                    <!--<button onclick="copiaAlportapapeles();" class="button-copiar" type="button">Copiar</button>-->
+                </div>
+                
+                <div id="recmuneco" class="salidatext" style="display:block;">
+                    <img class="muneco" src="imagenes/Muñeco.png" alt="muñeco encriptado">
+                    <div class="infencriptado">
+                        <h2 class="ningun">Ningún mensaje fue encontrado</h2>
+                        <h2 class="ingresar">Ingresa el texto que desees encriptar o desencriptar</h2>
+                    </div>
+                </div>
+                
             </section>
-            <section class="rectangulo">
-                <ul id="recmuneco" class="salidatext" style="display:block;">
-                    <li>
-                        <img class="muneco" src="imagenes/Muñeco.png">
-                        <p class="ningun">Ningún mensaje fue encontrado</p>
-                        <p class="ingresar">Ingresa el texto que desees encriptar o desencriptar</p>
-                    </li>
-                </ul>
-                <div id="rectAreaBoton" class="salidacopiar" style="display:none;">
-                    <textarea readonly class="textsalida" id="resultado" rows="5" cols="50"></textarea>
-                    <button onclick="copiaAlportapapeles();" class="copiar" type="button">Copiar</button>
-                </div>
-    
-            </section >
-
         </main>
             
         <script>
@@ -77,8 +75,8 @@
             }
         
             function encriptar(){
-                document.getElementById("rectAreaBoton").style.display = "block";
-                document.getElementById("recmuneco").style.display = "none";
+                document.getElementById("recmuneco").style="display:none;";
+                document.getElementById("rectAreaBoton").style="display:block;";
                 
                 var frase = verificar();
                 var encriptada = "";
@@ -127,7 +125,8 @@
             function desEncriptar(){
         
                 // PARA LA PRUEBA
-                var datoDesencrip = document.getElementById("resultado");
+                var datoDesencrip = document.getElementById("datoEntrada");
+                console.log(datoDesencrip);
                 var frase = datoDesencrip.value.split(' ');
                 //var frase = input.value.split(' ');
         
@@ -173,11 +172,12 @@
             //encrip.onclick = verificar;
             //button.onclick = desEncriptar;
             function copiaAlportapapeles(){
-                let texto = document.getElementById("resultado");
-                texto.select();
-                texto.setSelectionRange(0,99999);
-                document.execCommand('copy');
+                let texto = document.getElementById("resultado").value;
+                navigator.clipboard.writeText(texto);
+                document.getElementById("resultado").value=" ";
             }
+            //var copiarbutton = document.getElementById("botoncopiar");
+            //copiarbutton.addEventListener("click",copiaAlportapapeles)
 
             function soloLetras(e){
                 key = e.keyCode || e.which;
